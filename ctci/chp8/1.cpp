@@ -27,7 +27,7 @@ count_steps_impl(int total, int cur, int step, vector<int> &steps)
 
 
 int
-count_steps(int total, int cur, vector<int> & steps)
+count_steps(int total, int cur, vector<int> &steps)
 {
 	int sum = 0;
 	if (cur == total) {
