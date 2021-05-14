@@ -4,7 +4,7 @@
 using namespace std;
 
 ostream&
-operator <<(ostream& out, vector<int>& arr)
+operator <<(ostream &out, vector<int> &arr)
 {
 	for (int i = 0; i < arr.size(); i++)
 		out << arr[i] << " ";
@@ -13,7 +13,7 @@ operator <<(ostream& out, vector<int>& arr)
 }	
 
 int
-magic_index_dup_impl(vector<int>& arr, int start, int end)
+magic_index_dup_impl(vector<int> &arr, int start, int end)
 {
 	if (start > end)
 		return (-1);
@@ -32,13 +32,13 @@ magic_index_dup_impl(vector<int>& arr, int start, int end)
 }
 
 void
-magic_index_dup(vector<int>& arr)
+magic_index_dup(vector<int> &arr)
 {
 	(void) magic_index_dup_impl(arr, 0, arr.size() - 1);
 }
 
 int
-magic_index_impl(vector<int>& arr, int start, int end)
+magic_index_impl(vector<int> &arr, int start, int end)
 {
 	if (start > end)
 		return (-1);
@@ -57,7 +57,7 @@ magic_index_impl(vector<int>& arr, int start, int end)
 }
 
 void
-magic_index(vector<int>& arr)
+magic_index(vector<int> &arr)
 {
 	magic_index_impl(arr, 0, arr.size() - 1);
 }
