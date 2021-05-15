@@ -39,7 +39,8 @@ permutations(string &input)
 	cout << result;
 }
 
-int main(int argc, char **argv)
+int
+main(int argc, char **argv)
 {
 	string input(argv[1]);
 
