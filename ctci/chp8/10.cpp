@@ -63,7 +63,8 @@ allocate(int *grid[], int rows, int cols)
 	}	
 }
 
-int main(int argc, char **argv)
+int
+main(int argc, char **argv)
 {
 	int rows = atoi(argv[1]);
 	int cols = atoi(argv[2]);
