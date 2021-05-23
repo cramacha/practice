@@ -15,7 +15,7 @@ get_new_mid(vector<string> &sparse, int mid)
 	if (sparse[l] != "")
 		return (l);
 
-	while (r <=	sparse.size() && sparse[r] == "")
+	while (r <= sparse.size() && sparse[r] == "")
 		r++;
 
 	if (sparse[r] != "")
