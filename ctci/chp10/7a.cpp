@@ -62,20 +62,26 @@ bitvector::set(int num)
 }
 
 int
+get_missing_int_impl(bitvector *bv, int i, int j)
+{	
+	int index = i / TYPE_SIZE;
+	uint8_t	*current_byte = bv->get_bv()[index];
+	if ((current_byte != NULL) 
+			&& (*current_byte & (1 << j)) == 0)
+		return ((i * TYPE_SIZE) + j);
+	return (-1);
+}
+
+int
 get_missing_int(bitvector *bv)
 {
-	int index;
-	uint8_t *current_byte;
+	int num;
 	for (int i = 0; i < bv->get_size(); i++)
 	{
 		for (int j = 0; j < TYPE_SIZE; j++)
 		{
-			index = i / TYPE_SIZE;
-			current_byte = bv->get_bv()[index];
-			if (current_byte == NULL)
-			   continue;
-			if ((*current_byte & (1 << j)) == 0)
-				return ((i * TYPE_SIZE) + j);
+			if ((num = get_missing_int_impl(bv, i, j)) >= 0)
+				return (num);
 		}		
 	}
 	return (-1);	
