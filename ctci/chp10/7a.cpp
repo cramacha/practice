@@ -49,6 +49,14 @@ bitvector::bitvector(int input_size)
 
 bitvector::~bitvector()
 {
+	for (int i = 0; i < size; i++)
+	{
+		if (byte[i] != NULL) 
+		{
+			cout << "Deallocating memory for : " << i << endl;
+			delete byte[i];
+		}
+	}
 	delete byte;
 }
 
