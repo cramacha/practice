@@ -181,7 +181,8 @@ main(int argc, char **argv)
 			block_count, range_size);	
 	read_and_store(file, bv, missing_block, range_size);
 	int missing_num = get_missing_int(bv);
-	cout << "missing_num: " << missing_num << endl;
+	if (missing_num >= 0)
+		cout << ((missing_block * range_size) + missing_num);
 	delete bv;
 	return (0);
 }
