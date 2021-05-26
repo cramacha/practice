@@ -13,7 +13,7 @@ using namespace std;
  *	(1) First choose a range_size for an int array which can store
  *	all the ints.
  *		range_size >= (2^31/2^21) --> 10MB translates to 2^23 bytes
- *									  or 2^23/2^2(size of int) elements
+ *					or 2^23/2^2(size of int) elements
  *				   >= 2^10
  *	(2) Divide array into blocks and count number of elements
  *		in each block by reading file.
