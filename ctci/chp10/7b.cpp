@@ -182,6 +182,7 @@ main(int argc, char **argv)
 	read_and_store(file, bv, missing_block, range_size);
 	int missing_num = get_missing_int(bv);
 	cout << "missing_num: " << missing_num << endl;
+	delete bv;
 	return (0);
 }
 
