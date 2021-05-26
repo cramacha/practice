@@ -51,11 +51,8 @@ bitvector::~bitvector()
 {
 	for (int i = 0; i < size; i++)
 	{
-		if (byte[i] != NULL) 
-		{
-			cout << "Deallocating memory for : " << i << endl;
+		if (byte[i] != NULL)
 			delete byte[i];
-		}
 	}
 	delete byte;
 }
@@ -101,14 +98,13 @@ read_and_store(string filename, bitvector *bv)
 	ifstream stream(filename);
 	int num;
 	string line;
-	if (stream.is_open())
+	if (!stream.is_open())
+		return;
+	while (getline(stream, line))
 	{
-		while (getline(stream, line))
-		{
-			istringstream(line) >> num;
-			cout << "Storing : " << num << " in bit vector" << endl;
-			bv->set(num);
-		}
+		istringstream(line) >> num;
+		cout << "Storing : " << num << " in bit vector" << endl;
+		bv->set(num);
 	}
 	stream.close();
 }
