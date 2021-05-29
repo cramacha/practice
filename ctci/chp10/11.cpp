@@ -23,11 +23,12 @@ int
 biggest_of_three(vector<int> &inp, int i)
 {
 	int ret = max(inp[i], inp[i - 1]);
-	int maxnum = max(inp[(i + 1) % inp.size()], ret);
+	int end_index = (i + 1) % inp.size();
+	int maxnum = max(inp[end_index], ret);
 	if (maxnum == inp[i])
 		return (i);
 	else
-		return ((maxnum == inp[i - 1])? i - 1: i + 1);
+		return ((maxnum == inp[i - 1])? i - 1: end_index);
 }
 
 void
