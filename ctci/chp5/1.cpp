@@ -14,6 +14,7 @@ merge(int *m, int *n, int j, int i)
 	/*  Mask with all bits to left of i as 0. */
 	int rmask = (1 << i) - 1;
 
+	/*  Get a combined mask. */
 	int mask = lmask | rmask;
 
 	/*  Reset bits j to i in n. */
