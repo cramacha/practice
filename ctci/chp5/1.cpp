@@ -6,20 +6,20 @@ void
 merge(int *m, int *n, int j, int i)
 {
 	int k;
-	int mask = 0x7FFFFFFF;
-	int reset_bit = 1 << j;
 
-	/*  Flip bits j to i in mask */
-	for (k = 0; k < (j - i); k++)
-	{
-		mask ^= reset_bit;
-		reset_bit >>= 1;	
-	}
+	/*  Mask with all bits 1 to left of j
+	 *  and remaining 0 */
+	int lmask = ~0 << j;
+
+	/*  Mask with all bits to left of i as 0. */
+	int rmask = (1 << i) - 1;
+
+	int mask = lmask | rmask;
 
 	/*  Reset bits j to i in n. */
 	*n &= mask;
 
-	/*  Shift m by j bits. */
+	/*  Shift m by i bits. */
 	*m <<= i;
 
 	/*  Merge m in n. */
