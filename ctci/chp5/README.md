@@ -18,8 +18,8 @@ Chapter 5: Bit Manipulation
 
 5. Explain what the following code does: (n & (n - 1)) == 0.
 
-6. Write a function to determine the number of buts you would need to flip to
-   concery integer A to integer B.
+6. Write a function to determine the number of bits you would need to flip to
+   convert integer A to integer B.
 
 7. Write a program to swap odd and even bits in an integer with as few
    instructions as possible (e.g. bit 0 and bit 1 are swapped, bit 2 and bit 3
