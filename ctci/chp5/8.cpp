@@ -54,7 +54,7 @@ fill(BYTE *screen, int w, int x1,
 	if (x1/8 == x2/8)
 	{	
 		unsigned int mask = first_mask & last_mask;
-		screen[first_full_offset] |= (first_mask & last_mask);
+		screen[first_full_offset] |= mask;
 	}
 	else 
 	{	
