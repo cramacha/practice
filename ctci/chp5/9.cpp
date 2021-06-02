@@ -20,10 +20,6 @@ print_binary(uint8_t input)
 uint8_t
 reverse_stupid(uint8_t input)
 {
-	/*
-	 * e.g  input  = 0001 0110
-	 * 		output = 0000 1101
-	 */
 	uint8_t output = 0;
 	int index = 7;
 	for (int i = 0; i < 8; i++, index--)
