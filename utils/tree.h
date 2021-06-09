@@ -6,7 +6,7 @@
 
 using namespace std;
 
-template <type T>
+template <typename T>
 class node
 {
 	public:
@@ -19,41 +19,41 @@ class node
 		node<T>(T);
 };
 
-template <type T>
-node::node<T>()
+template <typename T>
+node<T>::node()
 {
 	left = right = parent = NULL;
 }
 
-template <type T>
-node::node<T>(T input)
+template <typename T>
+node<T>::node(T input)
 {
 	val = input;
 	left = right = parent = NULL;
 }
 
-template <type T>
-node::~node()
+template <typename T>
+node<T>::~node()
 {
 	left = right = parent = NULL;
 }
 
-template <type T>
+template <typename T>
 static int get_balance(node<T> *);
 
-template <type T>
+template <typename T>
 static int get_height(node<T> *);
 
-template <type T>
+template <typename T>
 static void rotate_left(node<T> **);
 
-template <type T>
+template <typename T>
 static void rotate_right(node<T> **);
 
-template <type T>
+template <typename T>
 static void perform_balance(node<T> **);
 
-template <type T>
+template <typename T>
 static int
 get_balance(node<T> *pn)
 {
@@ -62,7 +62,7 @@ get_balance(node<T> *pn)
 	return (abs(get_height(pn->left) - get_height(pn->right)));
 }
 
-template <type T>
+template <typename T>
 static int
 get_height(node<T> *pn)
 {
@@ -72,11 +72,11 @@ get_height(node<T> *pn)
 	return (1 + max(get_height(pn->left), get_height(pn->right)));
 }
 
-template <type T>
+template <typename T>
 void
-rotate_left(node **ppn)
+rotate_left(node<T> **ppn)
 {
-	node *root, *right;
+	node<T> *root, *right;
 	if ((root = *ppn) == NULL)
 		return;
 
@@ -86,11 +86,11 @@ rotate_left(node **ppn)
 	*ppn = right;	
 }
 
-template <type T>
+template <typename T>
 void
-rotate_right(node **ppn)
+rotate_right(node<T> **ppn)
 {
-	node *root, *left;
+	node<T> *root, *left;
 	if ((root == *ppn) == NULL)
 		return;
 
@@ -100,11 +100,11 @@ rotate_right(node **ppn)
 	*ppn = left;
 }
 
-template <type T>
+template <typename T>
 void
-perform_balance(node **ppn)
+perform_balance(node<T> **ppn)
 {
-	node *root;
+	node<T> *root;
 	if ((root = *ppn) == NULL)
 		return;
 	int balance = get_balance(root);
@@ -126,35 +126,35 @@ perform_balance(node **ppn)
 	}	
 }
 
-template <type T>
+template <typename T>
 class tree
 {
 	public:
-		node *root;
+		node<T> *root;
 		void insert(T);
 		tree<T>(void);
 		~tree<T>(void);
 	private:
-		void insert_impl(node **, node *);
+		void insert_impl(node<T> **, node<T> *);
 };
 
-template <type T>
-tree::tree<T>()
+template <typename T>
+tree<T>::tree()
 {
 	root = NULL;
 }
 
-template <type T>
-tree::~tree<T>()
+template <typename T>
+tree<T>::~tree()
 {
-	queue<T> q;
+	queue<node<T>*> q;
 	if (root == NULL)
 		return;
 
-	q.insert(root);
-	while (!q.empty)
+	q.push(root);
+	while (!q.empty())
 	{
-		node<T> front = q.front();
+		node<T> *front = q.front();
 		q.pop();
 		if (front->left)
 			q.push(front->left);
@@ -165,11 +165,11 @@ tree::~tree<T>()
 	root = NULL;
 }
 
-template <type T>
+template <typename T>
 void
-tree::insert_impl(node **ppn, node *pn)
+tree<T>::insert_impl(node<T> **ppn, node<T> *pn)
 {
-	node *root, *child;
+	node<T> *root, *child;
 
 	if ((root == *ppn) == NULL)
 	{
@@ -181,11 +181,11 @@ tree::insert_impl(node **ppn, node *pn)
 	perform_balance(root);
 }
 
-template <type T>
+template <typename T>
 void
-tree::insert(T inp)
+tree<T>::insert(T inp)
 {
-	node *input = new node(inp);
+	node<T> *input = new node<T>(inp);
 	insert_impl(root, input);	
 }
 
