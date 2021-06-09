@@ -2,17 +2,11 @@ Chapter 4: Trees and Graphs
 
 1. Given a directed graph, design an algorithm to find out whether or not there
    is a route between two nodes.
-   Note: For this one, I used an adjancency list.  Whenever possible, I prefer
-   these frankly because they're easier to print and visualize for debugging
-   purposes.
 
 2. Given a sorted array (increasing order), write an algorithm to create a
    binary search tree with minimal height (i.e. the key to minimal height is to
-   ensure that it is to balance it).  The tree implementation that I created
-   provides balancing already, but we should insert elements from the array
-   with the assumption that we expect the tree to be balanced at the end even
-   if it did not supply a balancing feature.
-
+   ensure that it is to balance it).
+  
 3. Given a binary tree, design an algorithm that creates lists of nodes, where
    each list contains nodes that are all at the same depth within the tree.
 
@@ -27,8 +21,7 @@ Chapter 4: Trees and Graphs
 7. Given a list of projects and a list of dependencies (i.e. a list of pairs
    of projects, where the second project is dependent on the first projets),
    find the build order that will allow all of the projects to be built.  If
-   there is no valid build order, return an error.  For this one, I also used
-   an adjenceny list.
+   there is no valid build order, return an error.
 
 8. Implement a function to find the first common ancestor of two nodes in a
    binary tree.  Note: this is not necessarily a BST either.
@@ -36,25 +29,16 @@ Chapter 4: Trees and Graphs
 9. A binary search tree was created by traversing through an array from left
    to right and inserting each element.  Given a binary search tree with
    distinct elements, print all possible arrays that could have led to the
-   creation of this tree.  This was, in my opinion, the most difficult problem
-   in the chapter.  The secret is the "weave".
+   creation of this tree.
 
 10. T1 and T2 are very large binary trees with T1 being much bigger than T2.
-    Create an algorithm to determine if T2 is a substree of T1.  I used a
-    bottom-up recursive approach.
+    Create an algorithm to determine if T2 is a substree of T1.
 
 11. Implement a function that returns a random node from a tree.  All nodes
-    should be equally likely to be chosen.  The approach I used was to generate
-    a random number `x` between 1 and N where N is the total number of nodes in
-    the tree.  From there, I did a breadth-first search to come up with the
-    node `pn` where `pn` is the xth node visited in the traversal process.
+    should be equally likely to be chosen. 
 
 12. You are given a binary tree in which each node contains an integer value
     (which may be positive or negative).  Design an algorithm to count the
     nunber of paths that sum to a given value.  The path does not need to start
     or end at a root or leaf, but it must go downwards (traveling only from
-    parent nodes to children).  Note: To help me, I used an array where the
-    length of the array is equal to the height of the tree.  I passed this to
-    recursive calls and started a new sum at each child as well as updating
-    historical sums from ancestors already visited.
-
+    parent nodes to children).  
