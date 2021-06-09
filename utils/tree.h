@@ -132,16 +132,38 @@ class tree
 	public:
 		node<T> *root;
 		void insert(T);
+		void print_tree(void);
 		tree<T>(void);
 		~tree<T>(void);
 	private:
 		void insert_impl(node<T> **, node<T> *);
+		void print_impl(node<T> *, int);
 };
 
 template <typename T>
 tree<T>::tree()
 {
 	root = NULL;
+}
+
+template <typename T>
+void
+tree<T>::print_impl(node<T> *pn, int depth)
+{
+	if (pn == NULL)
+		return;
+	for (int i = 0; i < depth; i++)
+		cout << " ";
+	cout << pn->val;
+	print_impl(pn->left, depth + 1);
+	print_impl(pn->right, depth + 1);
+}
+
+template <typename T>
+void
+tree<T>::print_tree()
+{
+	print_impl(root, 0);
 }
 
 template <typename T>
