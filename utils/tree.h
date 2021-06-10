@@ -154,7 +154,7 @@ tree<T>::print_impl(node<T> *pn, int depth)
 		return;
 	for (int i = 0; i < depth; i++)
 		cout << " ";
-	cout << pn->val;
+	cout << pn->val << endl;
 	print_impl(pn->left, depth + 1);
 	print_impl(pn->right, depth + 1);
 }
