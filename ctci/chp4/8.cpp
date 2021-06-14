@@ -24,7 +24,18 @@ ancestor(node<int> *pn1, node<int> *pn2, node<int> *root, node<int> **ppn)
 	node<int> *top1, *top2;
 	if (!find_node(pn1, root, s1) || !find_node(pn2, root, s2))
 		return;
-		
+
+	/*
+	 *	e.g let s1 = {3, 4, 5, 6}, s2 = {3, 4}
+	 *	After line 33 below, we are left with:
+	 *	s1 = {3, 4} and s2 = {3, 4}
+	 *
+	 *	The intersecting path leading up to that common
+	 *	ancestor is going to be the same so it makes sense
+	 *	to keep adjusting the stack sizes until they are
+	 *	equal and then start popping elements from both
+	 *	stacks until their tops are the same.
+	 */	
 	while (s1.size() > s2.size())
 		s1.pop();
 
