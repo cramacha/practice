@@ -34,13 +34,11 @@ find_path(vector<vector<int> > &adj, int start, int end)
 
 	q.push(start);
 
-	while (!q.empty())
-	{
+	while (!q.empty()) {
 		int node = q.front();
 		q.pop();
 		vector<int> neighbors = adj.at(node);
-		for (int i = 0; i < neighbors.size(); i++)
-		{
+		for (int i = 0; i < neighbors.size(); i++) {
 			int neighbor = neighbors.at(i);
 
 			/*  We found the end. */
@@ -63,8 +61,7 @@ main(int argc, char **argv)
 {
 	vector<vector<int> > adj;
 
-	for (int i = 0; i < 6; i++)
-	{
+	for (int i = 0; i < 6; i++) {
 		vector<int> al;
 		adj.push_back(al);
 	}

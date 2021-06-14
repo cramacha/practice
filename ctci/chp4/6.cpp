@@ -8,13 +8,11 @@ link_up(node<int> *pn)
 {
 	if (pn == NULL)
 		return;
-	if (pn->left)
-	{
+	if (pn->left) {
 		pn->left->parent = pn;
 		link_up(pn->left);
 	}
-	if (pn->right)
-	{
+	if (pn->right) {
 		pn->right->parent = pn;
 		link_up(pn->right);
 	}
@@ -43,8 +41,7 @@ first_right_parent(node<int> *pn)
 void
 successor(node<int> *pn, node<int> **ppn)
 {
-	if (pn == NULL)
-	{
+	if (pn == NULL) {
 		*ppn = NULL;
 		return;
 	}

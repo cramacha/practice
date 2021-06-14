@@ -19,8 +19,7 @@ count_levels_impl(node<int> *pn, int depth, vector<vector<int> > &res)
 	if (pn == NULL)
 		return;
 
-	if (depth == res.size())
-	{
+	if (depth == res.size()) {
 		vector<int> nv;
 		res.push_back(nv);
 	}
@@ -44,8 +43,7 @@ main(int argc, char **argv)
 	int n = atoi(argv[1]);
 	tree<int> t;
 	int num;
-	for (int i = 0; i < n; i++)
-	{	
+	for (int i = 0; i < n; i++) {
 		num = rand() % (n - 1);
 		cout << num << " ";
 		t.insert(num);

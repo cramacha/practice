@@ -17,12 +17,9 @@ operator <<(ostream &out, const vector<int> &inp)
 void
 bst(vector<int> &inp, node<int> **ppn, int left, int right)
 {
-	if (left >= right)
-	{
+	if (left >= right)	{
 		if (left == right)
-		{
 			*ppn = new node<int>(inp[left]);
-		}
 		return;
 	}
 	int mid = (left + right) >> 1;

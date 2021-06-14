@@ -60,23 +60,19 @@ is_balance2(node<int> *pn)
 	q.push(pn);
 	depth_map[pn] = 0;
 	
-	while (!q.empty())
-	{
+	while (!q.empty()) {
 		node<int> *pt = q.front();
 		q.pop();
 		depth = depth_map[pt];
-		if (pt->left)
-		{
+		if (pt->left) {
 			q.push(pt->left);
 			depth_map[pt->left] = depth + 1;
 		}
-		if (pt->right)
-		{
+		if (pt->right) {
 			q.push(pt->right);
 			depth_map[pt->right] = depth + 1;
 		}
-		if (depth == vnodes.size())
-		{
+		if (depth == vnodes.size()) {
 			vector<node<int> *> vn;
 			vnodes.push_back(vn);
 			if (depth > 0 &&
