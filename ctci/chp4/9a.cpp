@@ -32,8 +32,7 @@ count_levels(node<int> *root, vector<vector<node<int> *> > &v)
 		return;
 	q.push(root);
 	levels[root] = 0;
-	while (!q.empty())
-	{
+	while (!q.empty()) {
 		node<int> *pt = q.front();
 		q.pop();
 		depth = levels[pt];
@@ -62,8 +61,7 @@ permute_impl(vector<vector<node<int> *> > &v, int offset, int depth)
 		return;
 	}	
 
-	for (int i = offset + 1; i < v[depth].size(); i++)
-	{
+	for (int i = offset + 1; i < v[depth].size(); i++) {
 		swap(v[depth].at(i), v[depth].at(offset));
 		permute_impl(v, i, depth);
 		swap(v[depth].at(i), v[depth].at(offset));
