@@ -45,9 +45,11 @@ path_sum_impl(node<int> *root, vector<vector<node<int> *> > &v,
 		v.push_back(nv);
 	}
 
+	/*  The <= is needed so we add the node at depth = 0 */
 	for (i = 0; i <= depth; i++)
 		v[i].push_back(root);
 
+	/*  Same comment as above. */
 	for (i = 0; i <= depth; i++) {
 		if (sum_elements(v[i]) == total)
 			cout << v[i] << endl;		
