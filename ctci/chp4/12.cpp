@@ -28,6 +28,10 @@ sum_elements(vector<node<int> *> &inp)
 			});
 }
 
+/*
+ *	Enhanced the scope of the problem to print all the nodes which sum
+ *	to a particular total.
+ */
 void
 path_sum_impl(node<int> *root, vector<vector<node<int> *> > &v,
 		int total, int depth)
