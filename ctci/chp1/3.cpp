@@ -26,7 +26,7 @@ urlify(char *a, int len)
 	int last = len - 1;
 	for (cur = find_next(a, last); cur > 0; cur = find_next(a, last)) {
 		while (a[cur] != ' ') {
-			a[last--] = a[cur--];
+			swap(a[cur--], a[last--]);
 		}
 		last -= 3;
 		(void) memcpy(a + last + 1, "%20", 3);	
@@ -36,7 +36,7 @@ urlify(char *a, int len)
 int
 main(int argc, char **argv)
 {
-	const char *orig = "John Smith  ";
+	const char *orig = "Jo hn Smith    ";
 	int len = strlen(orig), i = 0;
 	char *urlified = (char *) malloc(sizeof (char) * len);
 	(void) memcpy(urlified, orig, len);
