@@ -24,7 +24,7 @@ sum_list(list<int> &l1, list<int> &l2, list<int> &total)
 		sum = carry + *it1 + *it2;
 		carry = sum / 10;
 		sum = sum % 10;
-		total.push_back(sum);
+		total.push_front(sum);
 		it1++;
 		it2++;
 	}
@@ -33,7 +33,7 @@ sum_list(list<int> &l1, list<int> &l2, list<int> &total)
 		sum = carry + *it1;
 		carry = sum / 10;
 		sum = sum % 10;
-		total.push_back(sum);
+		total.push_front(sum);
 		it1++;
 	}
 
@@ -41,12 +41,12 @@ sum_list(list<int> &l1, list<int> &l2, list<int> &total)
 		sum = carry + *it2;
 		carry = sum / 10;
 		sum = sum % 10;
-		total.push_back(sum);
+		total.push_front(sum);
 		it2++;
 	}
 
 	if (carry > 0)
-		total.push_back(carry);
+		total.push_front(carry);
 }
 
 int
