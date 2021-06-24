@@ -18,18 +18,20 @@ cycle(list<int> &l, node<int> **ppn)
 	 *	l = {0, 1, 2, 3, 1}
 	 *	slow  | fast
 	 *
-	 *	  0  | 0
+	 *	  0   | 0
 	 *	  1   | 2
 	 *	  2   | 1
 	 *	
 	 *	a) Fast and slow meet at 3.
 	 *	b) Set slow to this meet point and fast to head.
-	 *	c) Let them go one by one and they would meet at one point (if cycle).
+	 *	c) Let them go one by one and they would meet at one point
+	 *     (if cycle).
 	 *	d) If fast has raced ahead to NULL then there is no cycle.
 	 */
 	
-	for (; slow != NULL && fast != NULL && fast->next != NULL 
-			&& slow->next != fast->next->next; slow = slow->next, fast = fast->next->next);
+	for (; slow != NULL && fast != NULL && fast->next != NULL
+			&& slow->next != fast->next->next;
+			slow = slow->next, fast = fast->next->next);
 
 	if (fast == NULL || fast->next == NULL)
 		return (false);
@@ -37,7 +39,8 @@ cycle(list<int> &l, node<int> **ppn)
 	slow = slow->next;
 	fast = l.head;
 
-	for (; slow != NULL && fast != NULL && slow != fast; slow = slow->next, fast = fast->next);
+	for (; slow != NULL && fast != NULL
+			&& slow != fast; slow = slow->next, fast = fast->next);
 
 	*ppn = slow;
 	return (true);
