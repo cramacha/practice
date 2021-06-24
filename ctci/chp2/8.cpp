@@ -18,7 +18,7 @@ cycle(list<int> &l, node<int> **ppn)
 	 *	l = {0, 1, 2, 3, 1}
 	 *	slow  | fast
 	 *
-	 *	  0	  | 0
+	 *	  0  | 0
 	 *	  1   | 2
 	 *	  2   | 1
 	 *	
