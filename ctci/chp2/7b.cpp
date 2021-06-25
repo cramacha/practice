@@ -23,9 +23,9 @@ intersect_list(list<int> *l1, list<int> *l2, node<int> **ppn)
 	}
 	
 	/*  
-	 *  Advance larger by (len2 - len1) steps.
-	 *	Notice we are doing <= instead of <. This is to ensure that larger moves 
-	 *	to same head as smaller.
+	 * Advance larger by (len2 - len1) steps.
+	 * Notice we are doing <= instead of <. This is to ensure that larger moves 
+	 * to same head as smaller.
 	 */
 	delta = abs(len2 - len1);
 	for (i = 0, pn1 = l->head; i <= delta; i++, pn1 = pn1->next);
