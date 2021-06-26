@@ -22,8 +22,8 @@ is_palin(list<int> &l)
 	}
 
 	/*
-	 * Remove the extra node if the size is odd, so we can proceed to compare 
-	 * tmp and l node-by-node for equality.
+	 * Remove the extra node if the size is odd, so we can
+	 * proceed to compare tmp and l node-by-node for equality.
 	 *
 	 * l = {1, 0}
 	 * tmp = {1, 0}
@@ -34,7 +34,8 @@ is_palin(list<int> &l)
 	/*
 	 * Break early at the first instance of a mismatch between l and tmp.
 	 */
-	for (pn2 = tmp.get_head(), pn = l.get_head();pn2 != NULL && pn != NULL; pn2 = pn2->next, pn = pn->next) {
+	for (pn2 = tmp.get_head(), pn = l.get_head();
+			pn2 != NULL && pn != NULL; pn2 = pn2->next, pn = pn->next) {
 		if (pn->val != pn2->val)
 			return (false);
 	}
