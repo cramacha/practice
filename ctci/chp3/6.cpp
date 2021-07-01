@@ -69,7 +69,10 @@ animals::animals()
 {}
 
 animals::~animals()
-{}
+{
+	for (int i = 0; i < all.size(); i++)
+		all.erase(all.begin() + i);
+}
 
 void
 animals::insert(animal *input)
