@@ -99,6 +99,7 @@ animals::pop(void)
 animal
 animals::pop_type(animal_type_t input)
 {
+	vector<animal>::iterator it; 
 	animal to_pop;
 	assert (all.size() > 0);
 
@@ -106,7 +107,7 @@ animals::pop_type(animal_type_t input)
 		dogs.erase(dogs.begin());
 	else
 		cats.erase(cats.begin());
-	for (vector<animal>::iterator it = all.begin(); it != all.end(); it++) {
+	for (it = all.begin(); it != all.end(); it++) {
 		to_pop = *it;
 		all.erase(it);	
 	}
