@@ -70,8 +70,15 @@ animals::animals()
 
 animals::~animals()
 {
-	for (int i = 0; i < all.size(); i++)
+	int i;
+	for (i = 0; i < all.size(); i++)
 		all.erase(all.begin() + i);
+
+	for (i = 0; i < cats.size(); i++)
+		cats.erase(cats.begin() + i);
+
+	for (i = 0; i < dogs.size(); i++)
+		dogs.erase(dogs.begin() + i);	
 }
 
 void
