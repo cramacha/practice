@@ -16,13 +16,13 @@ using namespace std;
  * pointers, inc - representing 1 (if the stack grows left to right) or
  * -1 (if the stack grows right to left) and capacity of the stack.
  *
- *  The arrows below show the direction in which the stacks can grow.
- *  For all purposes the middle stack grows from left to right unless
- *  it is required to be shifted in which case it can shift both ways
- *  to accomodate left and right stacks.
- *	 ----------------------------------------
- *  |	LEFT--->|<---MIDDLE--->|<---RIGHT 	|
- *   ---------------------------------------- 
+ * The arrows below show the direction in which the stacks can grow.
+ * For all purposes the middle stack grows from left to right unless
+ * it is required to be shifted in which case it can shift both ways
+ * to accomodate left and right stacks.
+ *  ----------------------------------------
+ * |	LEFT--->|<---MIDDLE--->|<---RIGHT   |
+ *  ---------------------------------------- 
  */ 
 
 typedef enum stack_type
