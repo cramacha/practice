@@ -74,7 +74,7 @@ class stacks
 		stack *right;
 
 		stacks(int *, int);
-
+		~stacks();
 		/*  Public modifiers. */
 		void push(stack_type_t, int);
 		void pop(stack_type_t, int *);
@@ -143,13 +143,13 @@ void
 stack::print(void)
 {
 	int i, n;
-	int *tmp = top;
+	int *tmp = bottom;
 	
 	if (empty())
 		return;
 
 	n = count();
-	for (i = 0; i <= n; i++, tmp-=inc)
+	for (i = 0; i < n; i++, tmp+=inc)
 		cout << *tmp << " ";
 	cout << endl;
 }
@@ -162,21 +162,18 @@ stack::shift(direction_t dir)
 
 	/*  Learning some C magic here. */
 	void *src = (dir == MOVE_LEFT) ? top + 1 : bottom; 
-	void *dst = (dir ==	MOVE_LEFT) ? (int *) src - sizeof (int)
-		: (int *) src + sizeof (int);
+	void *dst = (int *) src + inc;
 
 	(void) memmove(dst, src, n * sizeof (int));
 
 	top += inc;
 	bottom += inc;
+}
 
-	/* This is similar to pop and done for viewing the 0s. */
-	if (dir == MOVE_LEFT) {
-		last = (int *) dst;
-		last += (n - 1);
-	} else
-		last = (int *) src;		
-	*last = 0;	
+stacks::~stacks()
+{
+	delete data;
+	data = NULL;
 }
 
 stacks::stacks(int *data, int capacity)
@@ -186,7 +183,7 @@ stacks::stacks(int *data, int capacity)
 
 	left = new stack(data, LEFT, 1, capacity);
 	middle = new stack(data + (capacity/3), MIDDLE, 1, capacity);
-	right = new stack(data + (capacity - 1), RIGHT, -1, capacity);
+	right = new stack(data + capacity, RIGHT, -1, capacity);
 }
 
 void
@@ -200,17 +197,17 @@ stacks::push(stack_type_t type, int elem)
 	 */ 
 	switch (type) {
 		case LEFT:
-			if (left->top + 1 == middle->bottom)
+			if (left->top == middle->bottom)
 				middle->shift(MOVE_RIGHT);
 			left->push(elem);
 			break;
 		case MIDDLE:
-			if (middle->top + 1 == left->top)
+			if (middle->top == left->top)
 				middle->shift(MOVE_RIGHT);
 			middle->push(elem);
 			break;
 		case RIGHT:
-			if (middle->top + 1 == left->top)
+			if (middle->top == left->top)
 				middle->shift(MOVE_LEFT);
 			right->push(elem);
 			break;
@@ -242,8 +239,13 @@ stacks::pop(stack_type_t type, int *elem)
 bool
 stacks::full(void)
 {
-	return (left->top + 1 == middle->bottom &&
-				middle->top + 1 == left->top);
+	/*
+	 *  The top is already one ahead per the logic in the push
+	 *  operation and so there is no need to add + 1 to these
+	 *  checks.
+	 */
+	return (left->top == middle->bottom &&
+				middle->top == right->top);
 }
 
 bool
@@ -255,16 +257,44 @@ stacks::empty(void)
 int
 main(int argc, char **argv)
 {
-	int i;
+	int i, val;
 	int n = atoi(argv[1]);
 	int *data = (int *) malloc (n * sizeof (int));
 	(void) bzero(data, n * sizeof (int));
 	stacks *st = new stacks(data, n);
-	for (i = 1; i <= n/3; i++) { 
-		st->push(LEFT, i);
-		st->push(MIDDLE, i * 3);
+	for (i = 0; i < n/3; i++) { 
+		st->push(LEFT, i + 1);
+		st->push(MIDDLE, (i + 1) * 3);
 	}
 	st->left->print();
 	st->middle->print();
-	return (0);
+	st->push(LEFT, 100);
+	st->left->print();
+	st->middle->print();
+	
+	st->push(RIGHT, -1);
+	st->right->print();
+	st->push(RIGHT, -2);
+	st->right->print();
+
+	cout << "Popping left" << endl;
+	while (!st->left->empty()) {
+		st->left->pop(&val);
+		cout << val << " ";
+	}
+	cout << endl;
+	cout << "Popping right" << endl;
+	while (!st->right->empty()) {
+		st->right->pop(&val);
+		cout << val << " ";
+	}
+	cout << endl;
+	cout << "Popping middle" << endl;
+	while (!st->middle->empty()) {
+		st->middle->pop(&val);
+		cout << val << " ";
+	}
+	cout << endl;
+
+return (0);
 }
