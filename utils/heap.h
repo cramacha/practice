@@ -8,11 +8,11 @@
 using namespace std;
 
 /*  
- * Basic Heap Structure.
- * I have opted to use a heap comparator to learn how I
- * can use it in this data structure.
- * For more explanation on below, see:
- * https://stackoverflow.com/questions/39734174/c-how-to-write-generic-comparator-function-for-int-double-string-etc-using-t
+ * Basic implementation of heap with the ability to provide a
+ * custom comparator for your specific data type. This is handy
+ * in the sift_up and sift_down operations. The logic for the custom
+ * comparator is based off the answers in this post:
+ * https://stackoverflow.com/questions/39734174/c-how-to-write-generic-comparator-function-for-int-double-string-etc-using-t.
  */
 struct int_compare {
 	bool operator()(const int &a, const int &b) const {
@@ -20,6 +20,10 @@ struct int_compare {
 	}
 };
 
+/*
+ * If the declaration does not contain the int type
+ * then we would use the standard std::less comparator.
+ */
 template <class T>
 struct heap_compare {
 	using type = std::less<T>;
@@ -34,6 +38,11 @@ struct heap_compare<int> {
 	using type = int_compare;
 };
 
+/*
+ * The following code is necessary in order to call
+ * the comparator in the sift_up and sift_down
+ * operations.
+ */
 template <class T>
 using heap_cmp = typename heap_compare<T>::type;
 
