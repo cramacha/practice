@@ -167,6 +167,10 @@ heap<T>::sift_up(int cur)
 	for (tmp = data[cur]; cur > 0; cur = parent) {
 		parent = cur / 2;
 
+		/*
+		 * This is same as:
+		 * if (tmp > data[parent]).
+		 */
 		if (!cmp(tmp, data[parent]))
 			break;
 		data[cur] = data[parent];
@@ -201,8 +205,13 @@ heap<T>::sift_down(int cur, int len)
 	int child;
 	for (tmp = data[cur]; child < len - 1; cur = child) {
 		child = left_child(cur);
+
+		/*
+		 * This is same as:
+		 * if (data[child + 1] > data[child])
+		 */
 		if (child < len - 1 
-				&& (cmp(data[child], data[child + 1])))
+				&& (!cmp(data[child + 1], data[child])))
 			child++;
 		data[child] = data[cur];
 	}
