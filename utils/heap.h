@@ -16,7 +16,7 @@ using namespace std;
  */
 struct int_compare {
 	bool operator()(const int &a, const int &b) const {
-		return (a < b);
+		return (a <= b);
 	}
 };
 
@@ -203,17 +203,25 @@ heap<T>::sift_down(int cur, int len)
 {
 	T tmp;
 	int child;
-	for (tmp = data[cur]; child < len - 1; cur = child) {
+	for (tmp = data[cur]; left_child(cur) < len; cur = child) {
 		child = left_child(cur);
 
 		/*
 		 * This is same as:
 		 * if (data[child + 1] > data[child])
 		 */
-		if (child < len - 1 
+		if (child != len - 1
 				&& (!cmp(data[child + 1], data[child])))
 			child++;
-		data[child] = data[cur];
+
+		/*
+		 * This is same as:
+		 * if (tmp < data[child])
+		 */
+		if (cmp(tmp, data[child]))
+			   break;
+
+		data[cur] = data[child];
 	}
 	data[cur] = tmp;
 }

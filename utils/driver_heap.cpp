@@ -1,4 +1,5 @@
 #include "heap.h"
+#include "heap_sort.h"
 
 int
 main(int argc, char **argv)
@@ -18,6 +19,9 @@ main(int argc, char **argv)
 	hp = new heap<int>(data, n, cmp);
 	for (i = n; i > 0; i--)
 		hp->insert(i);
+	hp->print();
+	heap_sort(hp);
+	cout << "after sorting:" << endl;
 	hp->print();
 	return (0);
 }
