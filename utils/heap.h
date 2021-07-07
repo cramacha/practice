@@ -208,10 +208,10 @@ heap<T>::sift_down(int cur, int len)
 
 		/*
 		 * This is same as:
-		 * if (data[child + 1] > data[child])
+		 * if (data[child + 1] <= data[child])
 		 */
 		if (child != len - 1
-				&& (!cmp(data[child + 1], data[child])))
+				&& (cmp(data[child + 1], data[child])))
 			child++;
 
 		/*
