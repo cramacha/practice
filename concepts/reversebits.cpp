@@ -14,7 +14,7 @@ print_binary(uint8_t input)
 	int i;
 	for (i = 8; i > 0; --i, input >>= 1)
 		cout << get_bit(input);
-	cout << endl;	
+	cout << endl;
 }
 
 uint8_t
@@ -24,7 +24,7 @@ reverse(uint8_t input)
 	/*
 	 * 0xFO = 11110000
 	 * 0xCC = 11001100
-	 * 0xAA = 10101010 
+	 * 0xAA = 10101010
 	 */
 	out = (((0xF0 & input) >> 4) | (~0xF0 & input) << 4);
 	out = (((0xCC & out) >> 2) | (~0xCC & out) << 2);
