@@ -29,6 +29,10 @@ class priority_queue
 {
 public:
 	priority_queue(int);
+	~priority_queue();
+
+	/*  Public modifiers. */
+	task get_next_task();
 
 	heap *hp;
 	int remaining;
@@ -58,8 +62,10 @@ class sched
 public:
 
 	sched(int, int);
+	~sched();
 
 	/*  Public modifiers. */
+	int get_thread_index();
 	sched_post(task *, int);
 	sched_execute();
 	sched_done();
@@ -69,5 +75,8 @@ public:
 	pthread_t *workers;
 	sched_state_t state;
 };
+
+static void worker_func(void *);
+static void process_task(task *, int);
 #endif /*  SCHED_H_ */
 
