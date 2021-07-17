@@ -219,7 +219,7 @@ sched::get_thread_index()
  * This executes all the tasks currently queued up.
  * pthread_cond_broadcast - This signals all threads waiting
  * on a condition variable to wakeup.
- * pthread_cond_wait - This waits to be
+ * pthread_cond_wait - This waits on a condition variable.
  */
 bool
 sched::sched_execute()
