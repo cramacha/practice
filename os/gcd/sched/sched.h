@@ -36,7 +36,7 @@ public:
 	void *args;
 };
 
-task::task(uint64_t pri, void (*fptr) (void * args, sint thread_num))
+task::task(uint64_t pri, void (*fptr) (void * args, int thread_num))
 {
 	this->pri = pri;
 	this->fptr = fptr;
@@ -120,6 +120,7 @@ public:
 	bool sched_post(task *, bool);
 	bool sched_execute();
 	bool sched_done();
+	void worker_func(void *);
 
 	priority_queue_t *pq;
 	int num_workers;
@@ -165,7 +166,7 @@ sched::~sched()
 bool
 sched::sched_post(task *tp; bool run_now)
 {
-	heap_element_t heap_elem;
+	heap_element heap_elem;
 	assert(pq != NULL && tp != NULL);
 
 	(void) pthread_mutex_lock(&mutex);
@@ -237,7 +238,57 @@ sched::sched_execute()
 	(void) pthread_mutex_unlock(&mutex);
 }
 
-static void worker_func(void *);
+/*
+ * Main method which does actual work. There are 3 possible states:
+ *
+ * State 1. If the scheduler is done and the heap is empty, then there is no
+ *    more work to be done, so we can exit.
+ * State 2. If the scheduler is stopped or the heap is empty, then there is
+ *    a chance that new work may come, so wait on condition variable.
+ * State 3. Otherwise we have just been woken up on the condition variable
+ *    and its time to get a task and process it.
+ */
+void
+sched::worker_func(void *args)
+{
+	int tid;
+	task *t;
+	(void) pthread_mutex_lock(&mutex);
+	for (;;) {
+		/*
+		 * State 1: Time to exit.
+		 */
+		if (state == SCHED_DONE && pq->hp->empty()) {
+			(void) pthread_mutex_unlock(&mutex);
+			break;
+		}
+
+		/*
+		 * State 2: Wait please.
+		 */
+		if (state == SCHED_STOPPED || pq->hp->empty())
+			(void) pthread_cond_wait(&cv);
+
+
+		/*
+		 * State 3: Start working.
+		 */
+		tid = get_thread_index();
+		t = get_next_task();
+		if (t != NULL) {
+			t->fptr(args, tid);
+
+			/*
+			 * At this point there is no more work left to be
+			 * done by the scheduler. Wakeup all threads blocked on
+			 * the condition variable.
+			 */
+			if (--pq->remaining == 0)
+				(void) pthread_cond_broadcast(&cv);
+		}
+		(void) pthread_mutex_unlock(&mutex);
+	}
+}
 
 #endif /*  SCHED_H_ */
 
