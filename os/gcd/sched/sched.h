@@ -175,6 +175,7 @@ sched::sched_post(task *tp; bool run_now)
 		return (false);
 	}
 
+	(void) bzero(heap_elem, sizeof (heap_elem));
 	heap_elem.val = tp->pri;
 	heap_elem.meta = tp;
 
@@ -187,7 +188,7 @@ sched::sched_post(task *tp; bool run_now)
 	}
 	
 	(void) pthread_mutex_unlock(&mutex);
-	return (false);
+	return (true);
 }
 
 /*
