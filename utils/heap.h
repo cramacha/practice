@@ -113,7 +113,7 @@ heap<T>::double_heap(void)
 		return (false);
 	}
 	(void) bzero(newarray, double_capacity * sizeof (T));
-
+	(void) memcpy(newarray, data, capacity * sizeof (T));
 	free(data);
 	data = newarray;
 	return (true);	
