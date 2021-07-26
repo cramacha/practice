@@ -13,6 +13,7 @@ using namespace std;
  */
 class heap_element
 {
+public:
 	/*  Priority is saved here. */
 	int val;
 
@@ -30,7 +31,7 @@ public:
 	bool empty();
 	bool full();
 	void insert(heap_element *);
-	void remove(heap_element **);
+	void remove(heap_element *);
 	void sift_up(int);
 	void sift_down(int, int);
 
@@ -44,7 +45,7 @@ private:
 heap::heap(int capacity)
 {
 	total = capacity;
-	if ((elem = (heap_element *) malloc(total * sizeof (heap_element)) == NULL)
+	if ((elem = (heap_element *) malloc(total * sizeof (heap_element))) == NULL)
 			return;
 
 	(void) bzero(elem, total * sizeof (heap_element));
@@ -67,7 +68,7 @@ heap::double_heap()
 	if ((newarray = (heap_element *) malloc(new_capacity * sizeof (heap_element))) == NULL)
 		return (false);
 
-	(void) bzero(new_capacity * sizeof (heap_element));
+	(void) bzero(newarray, new_capacity * sizeof (heap_element));
 
 	/*
 	 * Note that the third argument to memcpy needs the size of the
@@ -104,13 +105,13 @@ heap::insert(heap_element *input)
 	if (full() && !double_heap())
 		return;
 
-	elem[used] = input;
+	elem[used] = *input;
 	sift_up(used);
 	used++;
 }
 
 void
-heap::remove(heap_element **out)
+heap::remove(heap_element *out)
 {
 	if (empty())
 		return;
@@ -127,17 +128,17 @@ heap::sift_up(int cur)
 	heap_element tmp;
 	int parent;
 
-	assert(heap_element != NULL && cur > 0);
+	assert(elem != NULL && cur > 0);
 
-	for (tmp = heap_element[cur]; tmp > 0; cur = parent) {
+	for (tmp = elem[cur]; cur > 0; cur = parent) {
 		parent = cur / 2;
 
-		if (heap_element[cur].val > heap_element[parent].val)
+		if (elem[cur].val > elem[parent].val)
 			break;
-		heap_element[cur] = heap_element[parent];
+		elem[cur] = elem[parent];
 	}
 
-	heap_element[cur] = tmp;
+	elem[cur] = tmp;
 }
 
 int
@@ -152,22 +153,22 @@ heap::sift_down(int cur, int total)
 	heap_element tmp;
 	int lchild;
 
-	assert(heap_element != NULL && total > 0);
+	assert(elem != NULL && total > 0);
 
-	for (tmp = heap_element[cur]; left_child(cur) < total; cur = lchild) {
+	for (tmp = elem[cur]; left_child(cur) < total; cur = lchild) {
 		lchild = left_child(cur);
 
 		/*  Pick the bigger child. */
 		if (lchild < total
-				&& heap_element[lchild].val < heap_element[lchild + 1].val)
+				&& elem[lchild].val < elem[lchild + 1].val)
 			lchild++;
 
-		if (heap_element[cur].val <= heap_element[lchild].val)
+		if (elem[cur].val <= elem[lchild].val)
 			break;
 
-		heap_element[cur] = heap_element[lchild];
+		elem[cur] = elem[lchild];
 	}
-	heap_element[cur] = tmp;
+	elem[cur] = tmp;
 }
 
 #endif /*  HEAP_H_ */
