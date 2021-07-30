@@ -1,2 +1,5 @@
 *.plist
+*.o
+*.swp
+*.a
 *.out
