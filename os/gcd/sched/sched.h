@@ -50,7 +50,6 @@ public:
 	task *get_next_task();
 
 	heap *hp;
-	int remaining;
 	pthread_cond_t cv;
 	pthread_mutex_t mutex;
 };

@@ -86,7 +86,7 @@ heap::sift_up(int cur)
 	heap_element tmp;
 	int parent;
 
-	assert(elem != NULL && cur > 0);
+	assert(elem != NULL);
 
 	for (tmp = elem[cur]; cur > 0; cur = parent) {
 		parent = cur / 2;
@@ -111,7 +111,7 @@ heap::sift_down(int cur, int total)
 	heap_element tmp;
 	int lchild;
 
-	assert(elem != NULL && total > 0);
+	assert(elem != NULL);
 
 	for (tmp = elem[cur]; left_child(cur) < total; cur = lchild) {
 		lchild = left_child(cur);

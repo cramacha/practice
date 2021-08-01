@@ -1,17 +1,21 @@
 CC=g++
-CFLAGS+=-g
+CFLAGS=-g
 
 SCHED=../sched
 SRC := $(wildcard *.cpp)
 OBJ := $(patsubst %.cpp, %.o, $(SRC))
 DEPS := $(patsubst %.cpp, %.o, $(SRC))
 
-LIBS = -L. \
-	   -L$(SCHED) \
-	   -lsched \
-	   -lpthread
+ifeq ($(PTHREAD_SYNC), 1)
+	CFLAGS+= -DPTHREAD_SYNC
+endif
 
-%.o: %.c $(DEPS)
+LIBS = -L. \
+		-L$(SCHED) \
+		-lsched \
+		-lpthread
+
+%.o: %.cpp $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS)
 
 pthread_sync: $(OBJ)
@@ -19,6 +23,6 @@ pthread_sync: $(OBJ)
 	$(CC) -o $@ $^ $(CFLAGS) $(LIBS)
 
 clean:
-	$(MAKE) -C $(SCHED) clean
 	rm -rf pthread_sync *.o
+	$(MAKE) -C $(SCHED) clean
 

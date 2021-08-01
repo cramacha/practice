@@ -22,7 +22,7 @@ LIBS=	-L. \
 #
 # Then $@ refers to 'all' and $< refers to a.cpp.
 # If you see $^ it would refer to a.cpp and b.cpp.
-%.o: %.c $(DEPS)
+%.o: %.cpp $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS)
 
 # This is a rookie mistake but it is easy to add the
@@ -39,5 +39,5 @@ hello: $(OBJ)
 # Without that argument, the compiler will be attempting
 # to do 'make ../sched' and it will terminate with an error.
 clean:
-	$(MAKE) -C $(SCHED) clean
 	rm -rf hello *.o
+	$(MAKE) -C $(SCHED) clean

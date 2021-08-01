@@ -15,7 +15,6 @@ task::process(int thread_num)
 
 priority_queue::priority_queue(int queue_depth)
 {
-	remaining = queue_depth;
 
 	if (pthread_cond_init(&cv, NULL) != 0)
 		return;
@@ -25,7 +24,7 @@ priority_queue::priority_queue(int queue_depth)
 		return;
 	}
 
-	if ((hp = (heap *) malloc(queue_depth * sizeof (heap))) == NULL) {
+	if ((hp = new heap(queue_depth)) == NULL) {
 		(void) pthread_cond_destroy(&cv);
 		(void) pthread_mutex_destroy(&mutex);
 		return;
@@ -42,11 +41,11 @@ priority_queue::~priority_queue()
 task *
 priority_queue::get_next_task()
 {
-	heap_element *t;
-	assert(!hp->empty());
+	heap_element t;
+	assert (!hp->empty());
 
-	hp->remove(t);
-	return (task *) t->meta;
+	hp->remove(&t);
+	return (task *) t.meta;
 }
 
 sched::sched(int num_workers, int queue_depth)
@@ -86,13 +85,14 @@ sched::done()
 {
 	int i;
 	assert(workers != NULL && pq != NULL);
-
+	state = SCHED_DONE;
 	/*  Wakeup all threads blocked on the condition variable. */
 	(void) pthread_mutex_lock(&pq->mutex);
 	(void) pthread_cond_broadcast(&pq->cv);
 	(void) pthread_mutex_unlock(&pq->mutex);
 
 	/*  Wait for everyone to finish. */
+	cout << "Waiting for everyone to finish" << endl;
 	for (i = 0; i < num_workers; ++i)
 		(void) pthread_join(workers[i], NULL);
 
@@ -117,6 +117,7 @@ sched::post(task *tp, bool run_now)
 
 	(void) pthread_mutex_lock(&pq->mutex);
 	if (pq->hp->full()) {
+		cout << "heap full" << endl;
 		(void) pthread_mutex_unlock(&pq->mutex);
 		return (false);
 	}
@@ -126,13 +127,11 @@ sched::post(task *tp, bool run_now)
 	heap_elem.meta = tp;
 
 	(void) pq->hp->insert(&heap_elem);
-	pq->hp->used++;
-
 	if (run_now) {
 		state = SCHED_RUNNING;
 		(void) pthread_cond_signal(&pq->cv);
 	}
-
+	state = SCHED_STOPPED;
 	(void) pthread_mutex_unlock(&pq->mutex);
 	return (true);
 }
@@ -173,7 +172,6 @@ void
 sched::execute()
 {
 	assert(pq != NULL);
-
 	(void) pthread_mutex_lock(&pq->mutex);
 	state = SCHED_RUNNING;
 	(void) pthread_cond_broadcast(&pq->cv);
@@ -210,6 +208,7 @@ worker_func(void *args)
 	assert(sp != NULL && sp->pq != NULL);
 	pq = sp->pq;
 
+	tid = sp->get_thread_index();
 	(void) pthread_mutex_lock(&pq->mutex);
 	for (;;) {
 		/*
@@ -226,24 +225,27 @@ worker_func(void *args)
 		if (sp->state == SCHED_STOPPED || pq->hp->empty())
 			(void) pthread_cond_wait(&pq->cv, &pq->mutex);
 
-
 		/*
 		 * State 3: Start working.
 		 */
-		tid = sp->get_thread_index();
 		t = pq->get_next_task();
+		(void) pthread_mutex_unlock(&pq->mutex);
 		if (t != NULL) {
-			t->fptr(args, tid);
+			t->process(tid);
+
+			(void) pthread_mutex_lock(&pq->mutex);
 
 			/*
 			 * At this point there is no more work left to be
 			 * done by the scheduler. Wakeup all threads blocked on
 			 * the condition variable.
 			 */
-			if (--pq->remaining == 0)
+			if (pq->hp->used == 0) {
 				(void) pthread_cond_broadcast(&pq->cv);
-		}
+				sp->state = SCHED_DONE;
+			}
 		(void) pthread_mutex_unlock(&pq->mutex);
+		}
 	}
 	return (NULL);
 }
