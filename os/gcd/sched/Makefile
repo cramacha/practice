@@ -9,7 +9,7 @@ DEPS := $(patsubst %.cpp, %.o, $(SRC))
 
 LIBS= -Lpthread
 
-%.o: %.c $(DEPS)
+%.o: %.cpp $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS)
 
 # Here the 'ar' command runs 'ranlib' or 'libtool' to
