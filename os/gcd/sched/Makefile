@@ -7,7 +7,7 @@ SRC := $(wildcard *.cpp)
 OBJ := $(patsubst %.cpp, %.o, $(SRC))
 DEPS := $(patsubst %.cpp, %.o, $(SRC))
 
-LIBS= -Lpthread
+LIBS= -lpthread
 
 %.o: %.cpp $(DEPS)
 	$(CC) -c -o $@ $< $(CFLAGS)
