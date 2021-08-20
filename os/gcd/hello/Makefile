@@ -7,7 +7,6 @@ SCHED=../sched
 # to variables defined with a plain =.
 SRC := $(wildcard *.cpp)
 OBJ := $(patsubst %.cpp,%.o,$(SRC))
-DEPS := $(patsubst %.cpp,%.o,$(SRC))
 
 LIBS=	-L. \
 		-L$(SCHED) \
@@ -22,7 +21,7 @@ LIBS=	-L. \
 #
 # Then $@ refers to 'all' and $< refers to a.cpp.
 # If you see $^ it would refer to a.cpp and b.cpp.
-%.o: %.cpp $(DEPS)
+%.o: %.cpp
 	$(CC) -c -o $@ $< $(CFLAGS)
 
 # This is a rookie mistake but it is easy to add the

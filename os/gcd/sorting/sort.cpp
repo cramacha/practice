@@ -24,6 +24,16 @@ array_slice::array_slice(int *arr, int left, int right)
 }
 
 void
+print_array(int *arr, int len)
+{
+	int i;
+	for (i = 0; i < len; i++)
+		cout << arr[i] << " ";
+	cout << endl;
+}
+
+
+void
 array_slice_init(int *arr, array_slice *slices[], int len)
 {
 	assert(arr != NULL);
@@ -74,9 +84,10 @@ heapify(int *arr, int start, int len)
 }
 
 void
-heap_sort(int *arr, int start, int len)
+heap_sort(int *arr, int start, int end)
 {
 	int i;
+	int len = end - start + 1;
 	assert(arr != NULL);
 	heapify(arr, start, len);
 
@@ -137,15 +148,6 @@ merge_func(void *args, int thread_num)
 			slices[1].right);
 }
 
-void
-print_array(int *arr, int len)
-{
-	int i;
-	for (i = 0; i < len; i++)
-		cout << arr[i] << " ";
-	cout << endl;
-}
-
 int
 main(int argc, char **argv)
 {
@@ -156,10 +158,10 @@ main(int argc, char **argv)
 	int i;
 	int n = atoi(argv[1]);
 
-	assert (argc == 1 && n > 0);
+	assert (argc > 1 && n > 0);
 
 	/*  Scheduler with 2 tasks and 2 workers. */
-	sched *sp = new sched(2,2);
+	sched *sp = new sched(3,3);
 	if ((arr = (int *) malloc(n * sizeof (int))) == NULL)
 		exit(-1);
 	(void) bzero(arr, n * sizeof (int));
@@ -188,7 +190,6 @@ main(int argc, char **argv)
 	merge = new task(1, merge_func, (void *)&slices);
 	sp->post(merge, false);
 	(void) sp->execute();
-
 	/*  We are done - cleanup resources. */
 	(void) sp->done();
 	print_array(arr, n);

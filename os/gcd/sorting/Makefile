@@ -1,17 +1,16 @@
 CC=g++
-CFLAGS=-g
+CFLAGS=-g --std=c++11
 
 SCHED = ../sched
 SRC := $(wildcard *.cpp)
-OBJ := $(patsubst %.cpp,%.o,$(SRC))
-DEPS := $(patsubst %.cpp,%.d,$(SRC))
+OBJ := $(patsubst %.cpp, %.o, $(SRC))
 
 LIBS := -L$(SCHED) \
 		-L. \
 		-lpthread \
 		-lsched \
 
-%.o: %.cpp $(DEPS)
+%.o: %.cpp
 	$(CC) -c -o $@ $< $(CFLAGS)
 
 sort: $(OBJ)

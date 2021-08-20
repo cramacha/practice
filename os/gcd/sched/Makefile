@@ -5,11 +5,10 @@ CFLAGS=-g
 
 SRC := $(wildcard *.cpp)
 OBJ := $(patsubst %.cpp, %.o, $(SRC))
-DEPS := $(patsubst %.cpp, %.o, $(SRC))
 
 LIBS= -lpthread
 
-%.o: %.cpp $(DEPS)
+%.o: %.cpp
 	$(CC) -c -o $@ $< $(CFLAGS)
 
 # Here the 'ar' command runs 'ranlib' or 'libtool' to

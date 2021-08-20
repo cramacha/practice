@@ -4,7 +4,6 @@ CFLAGS=-g
 SCHED=../sched
 SRC := $(wildcard *.cpp)
 OBJ := $(patsubst %.cpp, %.o, $(SRC))
-DEPS := $(patsubst %.cpp, %.o, $(SRC))
 
 ifeq ($(PTHREAD_SYNC), 1)
 	CFLAGS+= -DPTHREAD_SYNC
@@ -15,7 +14,7 @@ LIBS = -L. \
 		-lsched \
 		-lpthread
 
-%.o: %.cpp $(DEPS)
+%.o: %.cpp
 	$(CC) -c -o $@ $< $(CFLAGS)
 
 pthread_sync: $(OBJ)

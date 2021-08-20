@@ -42,7 +42,8 @@ task *
 priority_queue::get_next_task()
 {
 	heap_element t;
-	assert (!hp->empty());
+	if (hp->empty())
+		return (NULL);
 
 	hp->remove(&t);
 	return (task *) t.meta;
