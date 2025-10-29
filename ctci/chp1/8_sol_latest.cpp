@@ -83,6 +83,12 @@ void zero(vector<vector<int> >&m, int r, int c) {
 		}
 	}
 
+	if (zero_row)
+		zero_cols(m, 0, r);
+
+	if (zero_col)
+		zero_rows(m, 0, c);	
+
 	cout << "Output = " << endl;
 	print_matrix(m, r, c);
 }
