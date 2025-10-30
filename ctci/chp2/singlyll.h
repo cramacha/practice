@@ -95,6 +95,19 @@ list<T>::list() {
 
 template <class T>
 void
+list<T>::pop_front() {
+	node<T> *pn = head;
+
+	if (head == nullptr) {
+		return;
+	}
+
+	head = head -> next;
+	delete pn;
+}
+
+template <class T>
+void
 list<T>::reverse() {
 	list<T> *rev = new list<int>();
 	node<T> *pn = head;
@@ -103,14 +116,12 @@ list<T>::reverse() {
 		return;
 	}
 
-	for (; pn != nullptr; pn = pn->next) {
-		cout << "pushing front" << endl;
+	while (pn != nullptr) {
 		rev->push_front(pn->val);
+		pn = pn->next;
 		pop_front();
-		cout << "popped front" << endl;
 	}
 
-	cout << "getting head" << endl;
 	head = rev->get_head();
 }
 
@@ -143,20 +154,6 @@ list<T>::push_back(T val) {
 
 	pn->next = tmp;
 }
-
-template <class T>
-void
-list<T>::pop_front() {
-	node<T> *pn = head;
-
-	if (head == nullptr) {
-		return;
-	}
-
-	head = head -> next;
-	delete pn;
-}
-
 
 template <class T>
 void
@@ -262,6 +259,7 @@ list<T>::at(int pos) const {
  template <class T>
  void
  list<T>::print() const {
+ 	cout << "Printing list" << endl;
  	node<T> *pn = head;
 
  	if (head == nullptr) {

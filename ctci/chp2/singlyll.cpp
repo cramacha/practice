@@ -40,6 +40,17 @@ int main(int argc, char **argv) {
 	l->append(*l2);
 	l->print();
 
+	
+	l->pop_back();
+	l->print();
+	l->pop_back();
+	l->print();
+	l->pop_back();
+	l->print();
+	
+	l->reverse();
+	l->print();
+
 	l->reverse();
 	l->print();
 	return (0);
