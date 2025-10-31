@@ -53,5 +53,10 @@ int main(int argc, char **argv) {
 
 	l->reverse();
 	l->print();
+
+	list<int> newl;
+	newl.push_back(1);
+	newl.push_back(2);
+	cout << newl << endl;
 	return (0);
 }

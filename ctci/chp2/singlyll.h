@@ -42,6 +42,7 @@ template <class U>
 ostream&
 operator <<(ostream &out, node<U> &p) {
 	out << p.val << endl;
+	return (out);
 }
 
 // List declaration.
@@ -70,7 +71,7 @@ class list {
 		list<T>();
 
 		template<class U>
-		friend ostream& operator <<(ostream &out, const node<U>&);
+		friend ostream& operator <<(ostream &out, const list<U>&);
 };
 
 template <class T>
@@ -271,6 +272,19 @@ list<T>::at(int pos) const {
  	}
 
  	cout << endl;
+ }
+
+ template <class U>
+ ostream&
+ operator  <<(ostream& out, const list<U>& l) {
+ 	node<U> *pn = l.head;
+
+ 	while (pn != nullptr) {
+ 		out << pn->val << " ";
+ 		pn = pn->next;
+ 	}
+ 	out << endl;
+ 	return (out);
  }
 
 #endif /* SINGLY_LINKED_LIST */
