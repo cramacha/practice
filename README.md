@@ -6,3 +6,6 @@
       * [Advanced Algorithms Concepts](https://github.com/cramacha/practice/tree/master/concepts)
    * Operating Systems
       * [GCD](https://github.com/cramacha/practice/tree/master/os/)
+
+* Other reading
+https://abseil.io/fast/hints.html?trk=feed_main-feed-card_feed-article-content)
